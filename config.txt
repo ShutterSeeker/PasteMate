@@ -1,0 +1,108 @@
+Development
+Blake Becker
+
+Must have starting and ending tag with the number corresponding to the hotkey you want to map.
+Mouse button 1 is 11 and 2 is 12.
+Press Alt+num for 0-9
+[[TODAY]] will show today's date in MM/DD/YYY format.
+Ending with [[LINK]] will open chrome with configured link.
+Ending with [[QUERY]] will open chrome with configured link.
+F1 will copy in SCALE using inspect.
+Ctrl+D will duplicate the tab in chrome
+
+[0]
+/*
+Power BI
+--------------------------------------------------------------------
+Report location: Distribution Center
+Report name: Inventory
+Page name: Inventory
+*/
+[/0]
+
+[1]
+/*
+ Mod     | Programmer    | Date       | Modification Description
+ --------------------------------------------------------------------
+ 001     | Blake Becker  | [[TODAY]] | Created.
+*/
+[/1]
+
+[2]
+CONVERT(DATE, DATEADD(MI, DATEDIFF(MI, GETUTCDATE(), GETDATE()), DATE_TIME_STAMP))
+[/2]
+
+[3]
+SELECT
+    CUSTOMER = IDENTIFIER
+    ,CUSTOMER_NAME = DESCRIPTION
+    ,ACTIVE
+    ,PROCESS_STAMP
+    ,USER_STAMP
+    ,DATE_TIME_STAMP
+FROM
+    GENERIC_CONFIG_DETAIL
+WHERE
+    RECORD_TYPE = N'customerNumber'
+    AND (IDENTIFIER = N'' OR DESCRIPTION LIKE N'%%')
+[/3]
+
+[4]
+COLLATE DATABASE_DEFAULT
+[/4]
+
+[5]
+/*
+ Mod     | Programmer    | Date       | Modification Description
+ --------------------------------------------------------------------
+ 001     | Blake Becker  | 06/13/2025 | Created.
+ 002     | Blake Becker  | 06/19/2025 | Handling NVARCHAR(MAX).
+*/
+
+SELECT 
+    TABLE_NAME, 
+    COLUMN_NAME, 
+    IS_NULLABLE,
+    VARIABLE = N'DECLARE @' + COLUMN_NAME + N' ' + 
+        UPPER(DATA_TYPE) + 
+        CASE 
+            WHEN DATA_TYPE IN ('char', 'nchar', 'varchar', 'nvarchar', 'binary', 'varbinary') 
+                THEN N' (' + CONVERT(NVARCHAR, REPLACE(CHARACTER_MAXIMUM_LENGTH, -1, N'MAX')) + N')'
+            WHEN DATA_TYPE IN ('decimal', 'numeric') 
+                THEN N' (' + CONVERT(NVARCHAR, NUMERIC_PRECISION) + N',' + CONVERT(NVARCHAR, NUMERIC_SCALE) + N')'
+            WHEN DATA_TYPE IN ('datetime2', 'datetimeoffset', 'time') 
+                THEN N' (' + CONVERT(NVARCHAR, DATETIME_PRECISION) + N')'
+            ELSE N''
+        END
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME LIKE '[[CLIPBOARD]]%'
+AND COLUMN_NAME LIKE '%'
+[[newWin]]
+[/5]
+
+[6]
+Control Panel\All Control Panel Items\Devices and Printers
+[/6]
+
+[7]
+
+[/7]
+
+[8]
+
+[/8]
+
+[9]
+https://chat.openai.com
+[[LINK]]
+[/9]
+
+[10]
+https://chat.openai.com
+[[LINK]]
+[/10]
+
+[11]
+https://scale20.byjasco.com/scale
+[[LINK]]
+[/11]
