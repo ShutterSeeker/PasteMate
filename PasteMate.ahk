@@ -1,7 +1,24 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
+; if SQL server management studio is active, F1 wil right click and send S, S, Enter, A, Enter
+#HotIf WinActive("ahk_exe ssms.exe")
+F1:: {
+    Click("Right")
+    Sleep(100)
+    Send("s") ; Right click, then S for "Script as"
+    Sleep(100)
+    Send("s") ; Then S for "CREATE TO"
+    Sleep(100)
+    Send("{Enter}") ; Then Enter
+    Sleep(100)
+    Send("a") ; Then A for "New Query"
+    Sleep(100)
+    Send("{Enter}") ; Then Enter
+}
+
 ; —————— F1: Inspect & copy inner text of element under mouse
+#HotIf WinActive("ahk_exe chrome.exe")
 F1:: {
     A_Clipboard := ""
     Click("Right")
