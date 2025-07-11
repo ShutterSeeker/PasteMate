@@ -1,6 +1,22 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
+; bind !0–!9 to keys 0–9
+!0:: HandleHotkey(0)
+!1:: HandleHotkey(1)
+!2:: HandleHotkey(2)
+!3:: HandleHotkey(3)
+!4:: HandleHotkey(4)
+!5:: HandleHotkey(5)
+!6:: HandleHotkey(6)
+!7:: HandleHotkey(7)
+!8:: HandleHotkey(8)
+!9:: HandleHotkey(9)
+
+; bind XButton1/2 to keys 10/11
+XButton1:: HandleHotkey(10)
+XButton2:: HandleHotkey(11)
+
 ; if SQL server management studio is active, F1 wil right click and send S, S, Enter, A, Enter
 #HotIf WinActive("ahk_exe ssms.exe")
 F1:: {
@@ -154,22 +170,6 @@ HandleHotkey(key) {
 
     A_Clipboard := origClip
 }
-
-; bind !0–!9 to keys 0–9
-!0:: HandleHotkey(0)
-!1:: HandleHotkey(1)
-!2:: HandleHotkey(2)
-!3:: HandleHotkey(3)
-!4:: HandleHotkey(4)
-!5:: HandleHotkey(5)
-!6:: HandleHotkey(6)
-!7:: HandleHotkey(7)
-!8:: HandleHotkey(8)
-!9:: HandleHotkey(9)
-
-; bind XButton1/2 to keys 10/11
-XButton1:: HandleHotkey(10)
-XButton2:: HandleHotkey(11)
 
 ; —————— Ctrl +D in Chrome: focus address bar + open in new tab
 #HotIf WinActive("ahk_exe chrome.exe")

@@ -85,7 +85,7 @@ Control Panel\All Control Panel Items\Devices and Printers
 [/6]
 
 [7]
-
+[[TODAY]]
 [/7]
 
 [8]
