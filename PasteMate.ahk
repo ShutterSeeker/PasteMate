@@ -19,7 +19,7 @@ XButton2:: HandleHotkey(11)
 
 ; if SQL server management studio is active, F1 wil right click and send S, S, Enter, A, Enter
 #HotIf WinActive("ahk_exe ssms.exe")
-F1:: {
+~MButton:: {
     Click("Right")
     Sleep(100)
     Send("s") ; Right click, then S for "Script as"
@@ -31,57 +31,6 @@ F1:: {
     Send("a") ; Then A for "New Query"
     Sleep(100)
     Send("{Enter}") ; Then Enter
-}
-
-; —————— F1: Inspect & copy inner text of element under mouse
-#HotIf WinActive("ahk_exe chrome.exe")
-F1:: {
-    A_Clipboard := ""
-    Click("Right")
-    Sleep(100)
-    Send("{Up}") ; Move to “Inspect”
-    Send("{Enter}")
-    
-    ; Wait until DevTools becomes active
-    WinWaitActive("ahk_class Chrome_WidgetWin_1", , 2) ; wait up to 2 seconds
-    Sleep(100)
-
-    maxAttempts := 30  ; retry for ~3 seconds
-    attempt := 0
-    value := ""
-
-    Loop {
-        Send("^c")
-        ClipWait(0.5)
-        html := A_Clipboard
-
-        if RegExMatch(html, ">\s*(.*?)\s*</", &m) {
-            value := StrReplace(m[1], "&nbsp;", " ")
-            break  ; success
-        }
-
-        attempt++
-        if (attempt >= maxAttempts) {
-            break  ; give up
-        }
-
-        Sleep(100)
-    }    
-    x := 0, y := 0
-    MouseGetPos(&x, &y)
-    
-    if (value != "") {
-        A_Clipboard := value
-        ToolTip("✔ " value, x + 10, y + 10)
-    } else {
-        ToolTip("❌ Failed to extract inner text", x + 10, y + 10)
-    }
-    SetTimer(() => ToolTip(), -1500)
-
-    if WinActive("ahk_class Chrome_WidgetWin_1") {
-        Send("!{F4}")
-    }    
-    return
 }
 
 ; —————— Generic handler for !0–!9 and XButton1/2
@@ -169,12 +118,4 @@ HandleHotkey(key) {
     Sleep(100)
 
     A_Clipboard := origClip
-}
-
-; —————— Ctrl +D in Chrome: focus address bar + open in new tab
-#HotIf WinActive("ahk_exe chrome.exe")
-^d:: {
-    Send("^l")        ; Focus address bar
-    Sleep(100)
-    Send("!+{Enter}") ; Open in new tab
 }
