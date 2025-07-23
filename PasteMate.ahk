@@ -18,7 +18,7 @@ XButton1:: HandleHotkey(10)
 XButton2:: HandleHotkey(11)
 
 ; if SQL server management studio is active, F1 wil right click and send S, S, Enter, A, Enter
-#HotIf WinActive("ahk_exe ssms.exe")
+#HotIf WinActive("ahk_exe ssms.exe") && GetMouseY() > 150
 ~MButton:: {
     Click("Right")
     Sleep(100)
@@ -31,6 +31,11 @@ XButton2:: HandleHotkey(11)
     Send("a") ; Then A for "New Query"
     Sleep(100)
     Send("{Enter}") ; Then Enter
+}
+
+GetMouseY() {
+    MouseGetPos(, &y)
+    return y
 }
 
 ; —————— Generic handler for !0–!9 and XButton1/2
